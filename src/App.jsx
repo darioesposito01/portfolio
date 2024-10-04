@@ -206,7 +206,7 @@ const Portfolio = () => {
             {projects.map((project, index) => (
               <AnimatedCard key={index} color="bg-purple-300">
                 <h3 className="text-2xl font-bold mb-2">{project.name}</h3>
-                <a href={project.url} className="text-blue-800 hover:underline mb-2 block font-bold" target="_blank" rel="noopener noreferrer">{project.url}</a>
+                <a href={project.url} className="text-blue-800 hover:underline font-bold line-clamp-1" target="_blank" rel="noopener noreferrer">{project.url}</a>
                 <p className="text-sm bg-white inline-block p-1 border border-black">Tecnologie: {project.tech}</p>
               </AnimatedCard>
             ))}
