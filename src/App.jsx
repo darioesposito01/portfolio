@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable react/prop-types */
+import { useState, useEffect } from 'react';
 import { FaGithub, FaLinkedin, FaEnvelope, FaTimes, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 // Importa le immagini
@@ -13,6 +14,7 @@ import rumbon2 from './assets/rumbon2.png'
 
 // import flashparkImage2 from '../assets/flashpark2.jpg';
 
+// eslint-disable-next-line react/prop-types
 const NeoBrutalismSection = ({ title, children }) => (
   <div className="mb-12 p-6 bg-yellow-300 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
     <h2 className="text-4xl font-bold mb-6 text-black">{title}</h2>
@@ -20,12 +22,14 @@ const NeoBrutalismSection = ({ title, children }) => (
   </div>
 );
 
+// eslint-disable-next-line react/prop-types
 const AnimatedCard = ({ children, color }) => (
   <div className={`${color} p-6 border-2 border-black transition-all duration-300 hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] cursor-pointer`}>
     {children}
   </div>
 );
 
+// eslint-disable-next-line react/prop-types
 const ProjectImage = ({ src, alt, onClick }) => (
   <div 
     className="border-4 border-black overflow-hidden transition-all duration-300 hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] cursor-pointer"
