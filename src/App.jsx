@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react';
 import { FaGithub, FaLinkedin, FaEnvelope, FaTimes, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-
+import emailjs from '@emailjs/browser';
+import ClipLoader from "react-spinners/ClipLoader";
 // Importa le immagini
 
 import ff1 from './assets/ff1.png';
@@ -85,6 +86,105 @@ const Modal = ({ isOpen, onClose, children }) => {
     </div>
   );
 };
+const ContactForm = () => {
+  const [formData, setFormData] = useState({
+    from_name: '',
+    reply_to: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState('');
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitMessage('');
+
+    emailjs.send(
+      'service_88gy5uq', // Sostituisci con il tuo Service ID
+      'template_mdb0ox9', // Sostituisci con il tuo Template ID
+      formData,
+      '89ycQLJ27i7Jk2qGa' // Sostituisci con la tua Public Key
+    )
+      .then((result) => {
+        console.log(result.text);
+        setSubmitMessage('Grazie per il tuo messaggio! Ti risponderò il prima possibile.');
+        setFormData({ from_name: '', reply_to: '', message: '' });
+      }, (error) => {
+        console.log(error.text);
+        setSubmitMessage('Si è verificato un errore. Per favore, riprova più tardi.');
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+      });
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div>
+        <label htmlFor="name" className="block mb-2 font-bold">Nome</label>
+        <input
+          type="text"
+          id="name"
+          name="from_name"
+          value={formData.from_name}
+          onChange={handleChange}
+          required
+          className="w-full p-2 border-2 border-black focus:outline-none focus:ring-2 focus:ring-yellow-400"
+        />
+      </div>
+      <div>
+        <label htmlFor="email" className="block mb-2 font-bold">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="reply_to"
+          value={formData.reply_to}
+          onChange={handleChange}
+          required
+          className="w-full p-2 border-2 border-black focus:outline-none focus:ring-2 focus:ring-yellow-400"
+        />
+        
+      </div>
+      <div>
+        <label htmlFor="message" className="block mb-2 font-bold">Messaggio</label>
+        <textarea
+          id="message"
+          name="message"
+          value={formData.message}
+          onChange={handleChange}
+          required
+          rows="4"
+          className="w-full p-2 border-2 border-black focus:outline-none focus:ring-2 focus:ring-yellow-400"
+        ></textarea>
+      </div>
+      {isSubmitting ?
+        <button type="submit" disabled className="px-4 py-2 w-48 bg-yellow-400 border-2 border-black font-bold hover:bg-yellow-500 transition-all duration-300 hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] cursor-pointer">
+         <ClipLoader
+        color={'white'}
+        loading={isSubmitting}
+        // cssOverride={override}
+        size={25}
+        aria-label="Loading Spinner"
+        data-testid="loader"
+      />
+      </button>
+      :
+      <button type="submit" className="px-4 py-2  w-48 bg-yellow-400 border-2 border-black font-bold hover:bg-yellow-500 transition-all duration-300 hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] cursor-pointer">
+        Invia Messaggio
+      </button>
+    }
+    </form>
+  );
+};
 
 const Portfolio = () => {
   const [selectedProject, setSelectedProject] = useState(null);
@@ -146,15 +246,15 @@ const Portfolio = () => {
     <div className="min-h-screen bg-white font-mono">
       <header className="bg-red-500 p-6 border-b-4 border-black">
         <h1 className="text-5xl font-bold text-white">Dario Esposito</h1>
-        <p className="text-2xl mt-2 text-white">Sviluppatore Frontend</p>
+        <p className="text-2xl mt-2 text-white">Sviluppatore di Software</p>
       </header>
 
       <main className="container mx-auto px-4 py-12">
         <NeoBrutalismSection title="Chi Sono">
           <p className="text-xl mb-6">
-            Sono uno sviluppatore frontend con solide competenze di risoluzione dei problemi e con
+            Sono uno sviluppatore software con solide competenze di risoluzione dei problemi e con
             esperienza nella creazione e progettazione di software. Sono di natura una persona
-            curiosa, mi piace mettermi in gioco e cimentarmi in nuove sfide.
+            curiosa, mi piace mettermi in gioco e cimentarmi in sfide sempre più difficili.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <AnimatedCard color="bg-blue-400">
@@ -201,16 +301,24 @@ const Portfolio = () => {
           </div>
         </NeoBrutalismSection>
 
-        <NeoBrutalismSection title="Progetti">
+        <NeoBrutalismSection title="Progetti Personali">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {projects.map((project, index) => (
               <AnimatedCard key={index} color="bg-purple-300">
                 <h3 className="text-2xl font-bold mb-2">{project.name}</h3>
-                <a href={project.url} className="text-blue-800 hover:underline font-bold line-clamp-1" target="_blank" rel="noopener noreferrer">{project.url}</a>
+                <a href={project.url} className="text-blue-800 hover:underline mb-2 block font-bold" target="_blank" rel="noopener noreferrer">{project.url}</a>
                 <p className="text-sm bg-white inline-block p-1 border border-black">Tecnologie: {project.tech}</p>
               </AnimatedCard>
             ))}
           </div>
+        </NeoBrutalismSection>
+
+        <NeoBrutalismSection title="Contattami">
+          <p className="mb-6 text-xl">
+            Hai un progetto in mente o vuoi semplicemente dire ciao? 
+            Compila il form sottostante e ti risponderò il prima possibile!
+          </p>
+          <ContactForm />
         </NeoBrutalismSection>
       </main>
 
