@@ -342,7 +342,7 @@ const Portfolio = () => {
       <footer className="bg-black text-white py-8">
         <div className="container mx-auto px-4 text-center">
           <div className="flex justify-center space-x-6 mb-4">
-            <a href="https://github.com/yourusername" className="hover:text-yellow-300 transition-colors duration-300"><FaGithub size={24} /></a>
+            <a href="https://github.com/darioesposito01" className="hover:text-yellow-300 transition-colors duration-300"><FaGithub size={24} /></a>
             <a href="https://www.linkedin.com/in/dario-esposito-b57121a8" className="hover:text-yellow-300 transition-colors duration-300"><FaLinkedin size={24} /></a>
             <a href="mailto:dario.esposito23@gmail.com" className="hover:text-yellow-300 transition-colors duration-300"><FaEnvelope size={24} /></a>
           </div>
