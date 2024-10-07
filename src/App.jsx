@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { FaGithub, FaLinkedin, FaEnvelope, FaTimes, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import emailjs from '@emailjs/browser';
 import ClipLoader from "react-spinners/ClipLoader";
@@ -43,13 +43,13 @@ const ProjectImage = ({ src, alt, onClick }) => (
 const ImageGallery = ({ images }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 2000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+  //   }, 2000);
 
-    return () => clearInterval(interval);
-  }, [images.length]);
+  //   return () => clearInterval(interval);
+  // }, [images.length]);
 
   const nextImage = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
@@ -60,23 +60,40 @@ const ImageGallery = ({ images }) => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative px-14">
       <img src={images[currentIndex]} alt={`Project image ${currentIndex + 1}`} className="w-full border-2 border-black" />
-      <button onClick={prevImage} className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white p-2 border-2 border-black">
+      {images.length > 1 ?
+      <>
+        <button onClick={prevImage} className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white p-2 border-2 border-black">
         <FaChevronLeft />
       </button>
       <button onClick={nextImage} className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white p-2 border-2 border-black">
         <FaChevronRight />
       </button>
+      </>
+    :
+    null  
+    }
+
+
     </div>
   );
 };
 
 const Modal = ({ isOpen, onClose, children }) => {
+  const handleBackgroundClick = useCallback((e) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  }, [onClose]);
+
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div 
+      className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+      onClick={handleBackgroundClick}
+    >
       <div className="bg-white p-4 border-4 border-black max-w-3xl max-h-[90vh] overflow-auto">
         <button onClick={onClose} className="float-right text-2xl">
           <FaTimes />
@@ -306,7 +323,7 @@ const Portfolio = () => {
             {projects.map((project, index) => (
               <AnimatedCard key={index} color="bg-purple-300">
                 <h3 className="text-2xl font-bold mb-2">{project.name}</h3>
-                <a href={project.url} className="text-blue-800 hover:underline mb-2 block font-bold" target="_blank" rel="noopener noreferrer">{project.url}</a>
+                <a href={project.url} className="text-blue-800 hover:underline mb-2 block font-bold overflow-auto" target="_blank" rel="noopener noreferrer">{project.url}</a>
                 <p className="text-sm bg-white inline-block p-1 border border-black">Tecnologie: {project.tech}</p>
               </AnimatedCard>
             ))}
