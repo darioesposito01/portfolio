@@ -218,15 +218,27 @@ const Portfolio = () => {
       company: "Banca Sella",
       date: "Maggio 2022 - Luglio 2022",
       role: "Sviluppatore Freelance",
-      description: "Sviluppo front-end applicazione mobile di banca Sella",
+      description: "Per banca sella mi sono occupato dello sviluppo della sezione di richiesta appuntamenti in particolare la funzionalità sviluppata permetteva di prenotare appuntamenti in filiale in fasce orarie diverse e con vari operatori, inoltre mi sono occupato di modificare le grafiche di alcune schermate per adattarle ai nuovi figma, il tech stack era composto da react-native e redux.",
       tech: "React-Native"
     },
     {
       company: "Mooney - EasyCassa",
       date: "Marzo 2022 - Agosto 2022",
       role: "Sviluppatore Freelance",
-      description: "Sviluppo e bug-fix su progetto easyCassa Cloud",
-      tech: "Reactjs"
+      description: "Sono entrato in un progetto già esistente con una codebase in ReactJS, Redux-Saga, e MaterialUI. Mi sono occupato dell'analisi tecnica e dello sviluppo della sezione 'magazzino' del portale gestionale, oltre a effettuare bug-fix su altre parti del gestionale. Le principali funzionalità sviluppate includono:",
+      details: [
+        "Creazione di una tabella interattiva per visualizzare tutti i prodotti di magazzino.",
+        "Implementazione di filtri avanzati per categoria, prodotti in sottoscorta e terminati.",
+        "Integrazione di funzionalità di ricerca per nome prodotto e codice a barre.",
+        "Sviluppo di un'interfaccia per la modifica in tempo reale dei valori di sottoscorta e giacenza.",
+        "Creazione di funzionalità per l'azzeramento massivo delle giacenze.",
+        "Gestione delle notifiche per prodotti in sottoscorta o terminati.",
+        "Progettazione di una vista dettagliata per tutti i movimenti di carico e scarico.",
+        "Implementazione di filtri per causale, data e ricerca avanzata.",
+        "Implementazione di logiche per la visualizzazione e gestione delle giacenze in contesti multi-negozio.",
+        "Sviluppo di filtri per la selezione di singoli o multipli punti vendita."
+      ],
+      tech: "ReactJS, Redux-Saga, MaterialUI"
     },
     {
       company: "Umana Studio",
@@ -234,6 +246,20 @@ const Portfolio = () => {
       role: "Sviluppatore Freelance",
       description: "Progettazione e creazione app mobile per l'associazione di polizia locale di Roma",
       tech: "React-Native, Python, Firebase"
+    },
+    {
+      company: "Know to Manage srl",
+      date: "Settembre 2021 - Ottobre 2021",
+      role: "Sviluppatore Freelance",
+      description: "Progettazione e sviluppo script di aggregazione dei dati delle vendite provenienti da varie piattaforme e-commerce per la creazione di report excel",
+      tech: "Python, REST-Api"
+    },
+    {
+      company: "Know to Manage srl",
+      date: "Novembre 2020 - Dicembre 2020",
+      role: "Sviluppatore Freelance",
+      description: "Progettazione e creazione portale web per integrare tramite le API di Microsoft i grafici di BI dei vari clienti (anabasi.net)",
+      tech: "HTML, CSS, Javascript, Python (Back-end)"
     }
   ];
 
@@ -265,7 +291,7 @@ const Portfolio = () => {
         <h1 className="text-5xl font-bold text-white">Dario Esposito</h1>
         <p className="text-2xl mt-2 text-white">Sviluppatore di Software</p>
       </header>
-
+  
       <main className="container mx-auto px-4 py-12">
         <NeoBrutalismSection title="Chi Sono">
           <p className="text-xl mb-6">
@@ -290,7 +316,7 @@ const Portfolio = () => {
             </AnimatedCard>
           </div>
         </NeoBrutalismSection>
-
+  
         <NeoBrutalismSection title="Galleria Progetti">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {projects.map((project, index) => (
@@ -303,7 +329,7 @@ const Portfolio = () => {
             ))}
           </div>
         </NeoBrutalismSection>
-
+  
         <NeoBrutalismSection title="Esperienze Lavorative">
           <div className="space-y-8">
             {experiences.map((exp, index) => (
@@ -312,13 +338,20 @@ const Portfolio = () => {
                 <p className="text-black mb-2">{exp.date}</p>
                 <p className="font-bold">{exp.role}</p>
                 <p className="mb-2">{exp.description}</p>
+                {exp.details && (
+                  <ul className="list-disc list-inside mb-2">
+                    {exp.details.map((detail, idx) => (
+                      <li key={idx} className="mb-1">{detail}</li>
+                    ))}
+                  </ul>
+                )}
                 <p className="text-sm bg-white inline-block p-1 border border-black">Tecnologie: {exp.tech}</p>
               </AnimatedCard>
             ))}
           </div>
         </NeoBrutalismSection>
-
-        <NeoBrutalismSection title="Progetti Personali">
+  
+        <NeoBrutalismSection title="Progetti">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {projects.map((project, index) => (
               <AnimatedCard key={index} color="bg-purple-300">
@@ -329,7 +362,7 @@ const Portfolio = () => {
             ))}
           </div>
         </NeoBrutalismSection>
-
+  
         <NeoBrutalismSection title="Contattami">
           <p className="mb-6 text-xl">
             Hai un progetto in mente o vuoi semplicemente dire ciao? 
@@ -338,7 +371,7 @@ const Portfolio = () => {
           <ContactForm />
         </NeoBrutalismSection>
       </main>
-
+  
       <footer className="bg-black text-white py-8">
         <div className="container mx-auto px-4 text-center">
           <div className="flex justify-center space-x-6 mb-4">
@@ -349,7 +382,7 @@ const Portfolio = () => {
           <p>© 2024 Dario Esposito. Tutti i diritti riservati.</p>
         </div>
       </footer>
-
+  
       <Modal isOpen={selectedProject !== null} onClose={() => setSelectedProject(null)}>
         {selectedProject && (
           <div>
